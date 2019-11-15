@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Nov  6 21:29:28 2019
-Splits QuickBooks general ledgers into a dicttionary of pandas dataframes
+Splits QuickBooks general ledgers into a dictionaries of pandas dataframes and stylized pivot tables.
 @author: michael
 """
 import importlib
@@ -72,13 +72,7 @@ class QuickBooks:
                 if imported_module.months[index] not in pvt.columns:
                     pvt[imported_module.months[index]] = np.nan
 
-            new_col = []
-            for index in range(1, 10):
-                for element in pvt.columns:
-                    if imported_module.months[index] == element:
-                        new_col.append(element)
-                        break
-            pvt.columns = new_col
+            pvt = pvt[['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']]
 
             pvt[''] = np.nan
             pvt['Vendor Mean'] = pvt.mean(axis=1).round(2)
